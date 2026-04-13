@@ -1,0 +1,3 @@
+{
+  "installCommand": "rm -f ../pnpm-workspace.yaml && npx pnpm@9 install --no-frozen-lockfile"
+}

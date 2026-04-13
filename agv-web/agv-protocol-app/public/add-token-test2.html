@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Token Test v2</title>
+<style>
+  body { font-family: -apple-system, sans-serif; background: #1a1a2e; color: #fff; padding: 20px; text-align: center; }
+  h2 { margin-top: 20px; }
+  button { display: block; width: 90%; max-width: 320px; margin: 10px auto; padding: 14px; font-size: 15px; font-weight: 600; border: none; border-radius: 12px; cursor: pointer; }
+  .btn-green { background: #4ade80; color: #000; }
+  .btn-blue { background: #60a5fa; color: #000; }
+  .btn-orange { background: #fb923c; color: #000; }
+  .btn-purple { background: #a78bfa; color: #000; }
+  .btn-yellow { background: #facc15; color: #000; }
+  .btn-pink { background: #f472b6; color: #000; }
+  #log { text-align: left; background: #111; padding: 15px; border-radius: 8px; margin-top: 20px; font-family: monospace; font-size: 12px; max-height: 400px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }
+  .ok { color: #4ade80; } .err { color: #f87171; } .info { color: #93c5fd; }
+</style>
+</head>
+<body>
+<h2>🦊 Add Token Test v2</h2>
+<p style="color:#aaa;font-size:13px">Bypass approaches for MM Mobile bug</p>
+
+<button class="btn-green" onclick="testConnect()">1. Connect</button>
+<button class="btn-blue" onclick="testDeepClone()">2. Deep-Clone JSON</button>
+<button class="btn-orange" onclick="testLegacySend()">3. ethereum.send()</button>
+<button class="btn-purple" onclick="testSendAsync()">4. sendAsync (callback)</button>
+<button class="btn-yellow" onclick="testDeepLink()">5. Deep Link</button>
+<button class="btn-pink" onclick="testProviderInfo()">6. Debug Provider Info</button>
+
+<div id="log"></div>
+
+<script>
+var logEl = document.getElementById('log');
+function log(msg, cls) {
+  var d = document.createElement('div');
+  d.className = cls || '';
+  d.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
+  logEl.appendChild(d);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+var eth = window.ethereum;
+if (!eth) { log('No window.ethereum!', 'err'); }
+else { log('ethereum OK, isMetaMask=' + eth.isMetaMask + ', chainId=' + eth.chainId, 'ok'); }
+
+var ADDR = '0x8F9EC8107C126e94F5C4df26350Fb7354E0C8af9';
+
+async function testConnect() {
+  log('--- Connect ---', 'info');
+  try {
+    var a = await eth.request({ method: 'eth_requestAccounts' });
+    log('Connected: ' + a[0], 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 2: JSON round-trip the ENTIRE request object
+async function testDeepClone() {
+  log('--- Deep-Clone full request ---', 'info');
+  try {
+    var raw = {
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20',
+        options: {
+          address: ADDR,
+          symbol: 'pGVT',
+          decimals: 18,
+          image: 'https://www.agvnexrur.ai/pGVT_128.png'
+        }
+      }
+    };
+    var cloned = JSON.parse(JSON.stringify(raw));
+    log('Cloned type: ' + typeof cloned.params + ', opts type: ' + typeof cloned.params.options, 'info');
+    var r = await eth.request(cloned);
+    log('Result: ' + JSON.stringify(r), 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 3: Legacy ethereum.send(method, params)
+async function testLegacySend() {
+  log('--- ethereum.send() ---', 'info');
+  if (typeof eth.send !== 'function') { log('send not available', 'err'); return; }
+  try {
+    var r = await eth.send('wallet_watchAsset', [{
+      type: 'ERC20',
+      options: { address: ADDR, symbol: 'pGVT', decimals: 18, image: 'https://www.agvnexrur.ai/pGVT_128.png' }
+    }]);
+    log('Result: ' + JSON.stringify(r), 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 4: sendAsync callback style (oldest API)
+function testSendAsync() {
+  log('--- sendAsync ---', 'info');
+  if (typeof eth.sendAsync !== 'function') { log('sendAsync not available', 'err'); return; }
+  eth.sendAsync({
+    method: 'wallet_watchAsset',
+    params: { type: 'ERC20', options: { address: ADDR, symbol: 'pGVT', decimals: 18, image: 'https://www.agvnexrur.ai/pGVT_128.png' } },
+    jsonrpc: '2.0',
+    id: Date.now()
+  }, function(err, res) {
+    if (err) log('Err: ' + (err.message || JSON.stringify(err)), 'err');
+    else log('Result: ' + JSON.stringify(res), 'ok');
+  });
+}
+
+// 5: Deep link — opens MM native handler
+function testDeepLink() {
+  log('--- Deep Link ---', 'info');
+  var url = 'metamask://wallet_watchAsset?type=ERC20&options.address=' + ADDR + '&options.symbol=pGVT&options.decimals=18';
+  log('Trying: ' + url, 'info');
+  window.location.href = url;
+}
+
+// 6: Dump provider internals
+function testProviderInfo() {
+  log('--- Provider Debug ---', 'info');
+  log('isMetaMask: ' + eth.isMetaMask, 'info');
+  log('chainId: ' + eth.chainId, 'info');
+  log('networkVersion: ' + eth.networkVersion, 'info');
+  log('selectedAddress: ' + eth.selectedAddress, 'info');
+  log('_metamask exists: ' + !!eth._metamask, 'info');
+  if (eth._metamask) {
+    log('_metamask.isUnlocked: ' + typeof eth._metamask.isUnlocked, 'info');
+  }
+  // Check available methods
+  var methods = ['request','send','sendAsync','enable','on','removeListener'];
+  methods.forEach(function(m) {
+    log(m + ': ' + typeof eth[m], 'info');
+  });
+  // Check if there's a custom provider wrapping
+  log('constructor: ' + (eth.constructor && eth.constructor.name), 'info');
+  log('isConnected: ' + (typeof eth.isConnected === 'function' ? eth.isConnected() : eth.isConnected), 'info');
+}
+</script>
+</body>
+</html>

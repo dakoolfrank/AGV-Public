@@ -1,0 +1,574 @@
+# sourcefile.yml
+# 旧 Google Drive 链接清单 — AGV Nexrur investor-portal
+# 用途：记录迁移前的旧文件ID，迁移至 Shared Drive 后填写 new_url
+# 迁移完成后由脚本批量替换 investor-portal 代码中的旧链接
+# 总计：124 个文件（3+8+9+24+16+4+1+25+34）
+# ※ daily_snapshots (30个) 已迁移至 agv_asset.yml（义传发电数据）
+
+groups:
+
+  - dir: 01_home
+    page: src/app/[locale]/page.tsx
+    description: 首页文件
+    count: 3
+    files:
+      - seq: 1
+        file_id: 1C6Awj0-rDYUE3xzbEW_umCRWod-HUhwB
+        old_url: https://drive.google.com/file/d/1C6Awj0-rDYUE3xzbEW_umCRWod-HUhwB/view
+        new_url: ""
+      - seq: 2
+        file_id: 1iGTCO2jI9302wU6QIGsDmfsY5FI3Q_t7
+        old_url: https://drive.google.com/file/d/1iGTCO2jI9302wU6QIGsDmfsY5FI3Q_t7/view
+        new_url: ""
+      - seq: 3
+        file_id: 11N8RXY9NnAQd9bi-nyvCBco2l6c0vZVo
+        old_url: https://drive.google.com/file/d/11N8RXY9NnAQd9bi-nyvCBco2l6c0vZVo/view
+        note: 与 02_tech/#7 同文件
+        new_url: ""
+
+  - dir: 02_tech
+    page: src/app/[locale]/tech/page.tsx
+    description: 技术文档
+    count: 8
+    files:
+      - seq: 1
+        file_id: 1mGqwUxxpJkHuaCjzlhQgnf8nUlLWXC0L
+        old_url: https://drive.google.com/file/d/1mGqwUxxpJkHuaCjzlhQgnf8nUlLWXC0L/view
+        new_url: ""
+      - seq: 2
+        file_id: 1T-SuRerI2noUMrSeaIy7bL6wUCpYKZpU
+        old_url: https://drive.google.com/file/d/1T-SuRerI2noUMrSeaIy7bL6wUCpYKZpU/view
+        new_url: ""
+      - seq: 3
+        file_id: 1NlumvYZAisfl9sZDZ9c0qeV5FDXcXTZD
+        old_url: https://drive.google.com/file/d/1NlumvYZAisfl9sZDZ9c0qeV5FDXcXTZD/view
+        new_url: ""
+      - seq: 4
+        file_id: 1kVwwThMXEOsAsfsH66yGA_7UFEbmvkAf
+        old_url: https://drive.google.com/file/d/1kVwwThMXEOsAsfsH66yGA_7UFEbmvkAf/view
+        new_url: ""
+      - seq: 5
+        file_id: 11rC_K2nBziNDhDtFdIu-LtdhlGJtgsLB
+        old_url: https://drive.google.com/file/d/11rC_K2nBziNDhDtFdIu-LtdhlGJtgsLB/view
+        new_url: ""
+        note: "TODO — 源文件非我方 Drive，无权限下载（Pitch_Institutional_Deck）"
+      - seq: 6
+        file_id: 1NlWfJ2tjYq8mWH-oXnZAXv4AXXBSUNDN
+        old_url: https://drive.google.com/file/d/1NlWfJ2tjYq8mWH-oXnZAXv4AXXBSUNDN/view
+        new_url: ""
+        note: "TODO — 源文件非我方 Drive，无权限下载（Pitch_Oil_to_AI_Deck）"
+      - seq: 7
+        file_id: 11N8RXY9NnAQd9bi-nyvCBco2l6c0vZVo
+        old_url: https://drive.google.com/file/d/11N8RXY9NnAQd9bi-nyvCBco2l6c0vZVo/view
+        note: 与 01_home/#3 同文件
+        new_url: ""
+      - seq: 8
+        file_id: 1u1yQ5ZVKRHoVKupUULg2mcscZVgV7v9E
+        old_url: https://drive.google.com/file/d/1u1yQ5ZVKRHoVKupUULg2mcscZVgV7v9E/view
+        new_url: ""
+
+  - dir: 03_financials/model_and_reports
+    page: src/app/[locale]/financials/page.tsx
+    description: 财务模型与报告
+    count: 9
+    files:
+      - seq: 1
+        file_id: 1zSuRXGfmgzzgb_yt6pM_rWHab6JX1fmB
+        old_url: https://drive.google.com/file/d/1zSuRXGfmgzzgb_yt6pM_rWHab6JX1fmB/view
+        note: 财务模型（主文档）
+        new_url: ""
+      - seq: 2
+        file_id: 1bjBb_A6sJdGEw6PNBCxL68gTVZewO5YH
+        old_url: https://drive.google.com/file/d/1bjBb_A6sJdGEw6PNBCxL68gTVZewO5YH/view
+        note: 财务报告
+        new_url: ""
+      - seq: 3
+        file_id: 10ioydWY8LNwX8pX22nvFZeagNvR6P81j
+        old_url: https://drive.google.com/file/d/10ioydWY8LNwX8pX22nvFZeagNvR6P81j/view
+        new_url: ""
+      - seq: 4
+        file_id: 1IJmdiazPVJuHNONdtlOEON20Zy9nQqmA
+        old_url: https://drive.google.com/file/d/1IJmdiazPVJuHNONdtlOEON20Zy9nQqmA/view
+        new_url: ""
+      - seq: 5
+        file_id: 1WCPiUKrYpV5nkgERwuO546q9_WrloZJO
+        old_url: https://drive.google.com/file/d/1WCPiUKrYpV5nkgERwuO546q9_WrloZJO/view
+        new_url: ""
+      - seq: 6
+        file_id: 1k_RdnenfxfBXpvsZ1xEBo1pXPNLZIj-d
+        old_url: https://drive.google.com/file/d/1k_RdnenfxfBXpvsZ1xEBo1pXPNLZIj-d/view
+        new_url: ""
+      - seq: 7
+        file_id: 1wVAcZu7wwtNsK8sx4TuJYqKpRbDsYKeH
+        old_url: https://drive.google.com/file/d/1wVAcZu7wwtNsK8sx4TuJYqKpRbDsYKeH/view
+        new_url: ""
+      - seq: 8
+        file_id: 1RVcIHLbRXmbj7DWaPufXld-G2k7ElyqE
+        old_url: https://drive.google.com/file/d/1RVcIHLbRXmbj7DWaPufXld-G2k7ElyqE/view
+        new_url: ""
+      - seq: 9
+        file_id: 116klZMugB6RTx48Ne0nsM-haU_I9T3Ei
+        old_url: https://drive.google.com/file/d/116klZMugB6RTx48Ne0nsM-haU_I9T3Ei/view
+        new_url: ""
+
+  - dir: 04_legal
+    page: src/app/[locale]/legal/page.tsx
+    description: 法律文件
+    count: 24
+    files:
+      - seq: 1
+        file_id: 1YBs9KNhi0pht2mQkglykG4_8iNQmnhRd
+        old_url: https://drive.google.com/file/d/1YBs9KNhi0pht2mQkglykG4_8iNQmnhRd/view
+        new_url: ""
+      - seq: 2
+        file_id: 1VO6wmr2tRIu6oe5GyCDxSiJ1LJXUiKjW
+        old_url: https://drive.google.com/file/d/1VO6wmr2tRIu6oe5GyCDxSiJ1LJXUiKjW/view
+        new_url: ""
+      - seq: 3
+        file_id: 1AR0hlm23iudg9vhu76Tt_RN068N-CQp8
+        old_url: https://drive.google.com/file/d/1AR0hlm23iudg9vhu76Tt_RN068N-CQp8/view
+        new_url: ""
+      - seq: 4
+        file_id: 1wJgiNtARV2disKQOblUb2eT6zjNp9_LE
+        old_url: https://drive.google.com/file/d/1wJgiNtARV2disKQOblUb2eT6zjNp9_LE/view
+        new_url: ""
+      - seq: 5
+        file_id: 1Ac94emrXNET5E_N_kznhbnvcraXfXr9f
+        old_url: https://drive.google.com/file/d/1Ac94emrXNET5E_N_kznhbnvcraXfXr9f/view
+        new_url: ""
+      - seq: 6
+        file_id: 1zRKNFVwFdKfEPJlltW1LWnBskmB4sn5I
+        old_url: https://drive.google.com/file/d/1zRKNFVwFdKfEPJlltW1LWnBskmB4sn5I/view
+        new_url: ""
+      - seq: 7
+        file_id: 1tgKsYSQhYpjRL0jyiSrUtYse4mWSauFg
+        old_url: https://drive.google.com/file/d/1tgKsYSQhYpjRL0jyiSrUtYse4mWSauFg/view
+        new_url: ""
+      - seq: 8
+        file_id: 1vcG1nkJhsdtsb1BnBtz3m0PyprtOuxtN
+        old_url: https://drive.google.com/file/d/1vcG1nkJhsdtsb1BnBtz3m0PyprtOuxtN/view
+        new_url: ""
+      - seq: 9
+        file_id: 16s2tb3ZCrfw3-BUDr7fcZeByyegFTMwZ
+        old_url: https://drive.google.com/file/d/16s2tb3ZCrfw3-BUDr7fcZeByyegFTMwZ/view
+        new_url: ""
+      - seq: 10
+        file_id: 1bcVcuPVfooW1OPRm-Q4IVLvD0QyhnM9h
+        old_url: https://drive.google.com/file/d/1bcVcuPVfooW1OPRm-Q4IVLvD0QyhnM9h/view
+        new_url: ""
+      - seq: 11
+        file_id: 1KmTQ5qbF3B22IAqzRnYj_-6ZPv00RgBM
+        old_url: https://drive.google.com/file/d/1KmTQ5qbF3B22IAqzRnYj_-6ZPv00RgBM/view
+        new_url: ""
+      - seq: 12
+        file_id: 1h8bFYZc6bA2ExmeTPXwXdflfEFV-VdsA
+        old_url: https://drive.google.com/file/d/1h8bFYZc6bA2ExmeTPXwXdflfEFV-VdsA/view
+        new_url: ""
+      - seq: 13
+        file_id: 1ODXb4uxKYtoJUjJrqXFIDGtakfc-5EL_
+        old_url: https://drive.google.com/file/d/1ODXb4uxKYtoJUjJrqXFIDGtakfc-5EL_/view
+        new_url: ""
+      - seq: 14
+        file_id: 1LDHkr2xd-PyS9-yrljylKLufaeOrSrLL
+        old_url: https://drive.google.com/file/d/1LDHkr2xd-PyS9-yrljylKLufaeOrSrLL/view
+        new_url: ""
+      - seq: 15
+        file_id: 1mqklbyqi7DVmWR5yfsGNnPGluzQcFEbX
+        old_url: https://drive.google.com/file/d/1mqklbyqi7DVmWR5yfsGNnPGluzQcFEbX/view
+        new_url: ""
+      - seq: 16
+        file_id: 1CdrQf3KMX7dWnOiIdcR5BuBWcv5VzJ_N
+        old_url: https://drive.google.com/file/d/1CdrQf3KMX7dWnOiIdcR5BuBWcv5VzJ_N/view
+        new_url: ""
+      - seq: 17
+        file_id: 1YjTLsm13Z-4I4pg9SdxQyBsN0TNQY_iH
+        old_url: https://drive.google.com/file/d/1YjTLsm13Z-4I4pg9SdxQyBsN0TNQY_iH/view
+        new_url: ""
+      - seq: 18
+        file_id: 1NzKP2HuxwkyaLm05rfZqP44QTX_qcAHq
+        old_url: https://drive.google.com/file/d/1NzKP2HuxwkyaLm05rfZqP44QTX_qcAHq/view
+        new_url: ""
+      - seq: 19
+        file_id: 1QZhelus1-4TrhgnANevsBjEJQYPXFCXs
+        old_url: https://drive.google.com/file/d/1QZhelus1-4TrhgnANevsBjEJQYPXFCXs/view
+        new_url: ""
+      - seq: 20
+        file_id: 1Zz8BOD14rNn5YzGVkFBLibDFMRhW6a_c
+        old_url: https://drive.google.com/file/d/1Zz8BOD14rNn5YzGVkFBLibDFMRhW6a_c/view
+        new_url: ""
+      - seq: 21
+        file_id: 1_QpJFdrRySDYSm1b8DB3LPwY57xbV3gt
+        old_url: https://drive.google.com/file/d/1_QpJFdrRySDYSm1b8DB3LPwY57xbV3gt/view
+        new_url: ""
+      - seq: 22
+        file_id: 1hGtoKW-iZ2cIGSFZAYIFoMbDRLijo7Bb
+        old_url: https://drive.google.com/file/d/1hGtoKW-iZ2cIGSFZAYIFoMbDRLijo7Bb/view
+        new_url: ""
+      - seq: 23
+        file_id: 1SU-FsT6WAk2IHNtDIHlbwn9N26BiN8VU
+        old_url: https://drive.google.com/file/d/1SU-FsT6WAk2IHNtDIHlbwn9N26BiN8VU/view
+        new_url: ""
+      - seq: 24
+        file_id: 117pK6bwoasfOAC_Lc25H0-kLTn-VrpFx
+        old_url: https://drive.google.com/file/d/117pK6bwoasfOAC_Lc25H0-kLTn-VrpFx/view
+        new_url: ""
+
+  - dir: 05_esg
+    page: src/app/[locale]/esg/page.tsx
+    description: ESG文件
+    count: 16
+    files:
+      - seq: 1
+        file_id: 1ZXuMQ_J1qk2kO0ikhb7v7A9G5JCyJ-SR
+        old_url: https://drive.google.com/file/d/1ZXuMQ_J1qk2kO0ikhb7v7A9G5JCyJ-SR/view
+        new_url: ""
+      - seq: 2
+        file_id: 1UpKQf0Is2pK4mMpFRe7n4E5R2Gosuzvs
+        old_url: https://drive.google.com/file/d/1UpKQf0Is2pK4mMpFRe7n4E5R2Gosuzvs/view
+        new_url: ""
+      - seq: 3
+        file_id: 1UXijBBnkcNvfgutvGLFW5enBojdg_Uc1
+        old_url: https://drive.google.com/file/d/1UXijBBnkcNvfgutvGLFW5enBojdg_Uc1/view
+        new_url: ""
+      - seq: 4
+        file_id: 1wU09tigbNCNZqlFrvVIWYFhaMly8GXDh
+        old_url: https://drive.google.com/file/d/1wU09tigbNCNZqlFrvVIWYFhaMly8GXDh/view
+        new_url: ""
+      - seq: 5
+        file_id: 1HxNe-6IuSeOTEafhwygbuuJtcLS-fR8X
+        old_url: https://drive.google.com/file/d/1HxNe-6IuSeOTEafhwygbuuJtcLS-fR8X/view
+        new_url: ""
+      - seq: 6
+        file_id: 1ntEUKVU2DyQJvf7S6EiQVwBs3Zik8cqq
+        old_url: https://drive.google.com/file/d/1ntEUKVU2DyQJvf7S6EiQVwBs3Zik8cqq/view
+        new_url: ""
+      - seq: 7
+        file_id: 1u8h-9m52UNpLTr05EIS1ueNeLwZ5zpzn
+        old_url: https://drive.google.com/file/d/1u8h-9m52UNpLTr05EIS1ueNeLwZ5zpzn/view
+        new_url: ""
+      - seq: 8
+        file_id: 1j5DIpobUMu9830h_oa7YgUi4QN0-dida
+        old_url: https://drive.google.com/file/d/1j5DIpobUMu9830h_oa7YgUi4QN0-dida/view
+        new_url: ""
+      - seq: 9
+        file_id: 1V1UUn5Qm8YFC8HDkEGN-5IyP439luGts
+        old_url: https://drive.google.com/file/d/1V1UUn5Qm8YFC8HDkEGN-5IyP439luGts/view
+        new_url: ""
+      - seq: 10
+        file_id: 1Jat6StbcuNZg9U2My2ShF0w8VQcaoxOV
+        old_url: https://drive.google.com/file/d/1Jat6StbcuNZg9U2My2ShF0w8VQcaoxOV/view
+        new_url: ""
+      - seq: 11
+        file_id: 19pGP79fUdrdLvoMhbDU5kb4VO2Mpa80J
+        old_url: https://drive.google.com/file/d/19pGP79fUdrdLvoMhbDU5kb4VO2Mpa80J/view
+        new_url: ""
+      - seq: 12
+        file_id: 1T9KIotVbS-IK3XGTa_PD4qMtraQyd5P4
+        old_url: https://drive.google.com/file/d/1T9KIotVbS-IK3XGTa_PD4qMtraQyd5P4/view
+        new_url: ""
+      - seq: 13
+        file_id: 1jwk-fY_bNvxdIn_jW7AjIolnCWqTuVfb
+        old_url: https://drive.google.com/file/d/1jwk-fY_bNvxdIn_jW7AjIolnCWqTuVfb/view
+        new_url: ""
+      - seq: 14
+        file_id: 14oATLDNL95wintBSZAlwvelOe0i4C4lf
+        old_url: https://drive.google.com/file/d/14oATLDNL95wintBSZAlwvelOe0i4C4lf/view
+        new_url: ""
+      - seq: 15
+        file_id: 1lDZ159lXVQuZSPIyfzXF2sYTGdDZhRXB
+        old_url: https://drive.google.com/file/d/1lDZ159lXVQuZSPIyfzXF2sYTGdDZhRXB/view
+        new_url: ""
+      - seq: 16
+        file_id: 1MNuv_XXGVu17eyCYVRMSmhkhZBP7LEyY
+        old_url: https://drive.google.com/file/d/1MNuv_XXGVu17eyCYVRMSmhkhZBP7LEyY/view
+        new_url: ""
+
+  - dir: 06_sales_marketing
+    page: src/app/[locale]/sales-marketing/page.tsx
+    description: 销售营销文件
+    count: 4
+    files:
+      - seq: 1
+        file_id: 1pB4Pr29IAIEW1xcu3LDxykQJ7ApY9_hb
+        old_url: https://drive.google.com/file/d/1pB4Pr29IAIEW1xcu3LDxykQJ7ApY9_hb/view
+        new_url: ""
+      - seq: 2
+        file_id: 1qEDgK2s8Pi93bdjbptna8nClNj4kBZcm
+        old_url: https://drive.google.com/file/d/1qEDgK2s8Pi93bdjbptna8nClNj4kBZcm/view
+        new_url: ""
+      - seq: 3
+        file_id: 1vvWF2U-fwx7ndQnBLZD83xsl23BEFGJX
+        old_url: https://drive.google.com/file/d/1vvWF2U-fwx7ndQnBLZD83xsl23BEFGJX/view
+        new_url: ""
+      - seq: 4
+        file_id: 1oxcwubBDRW1r-KRPJ89blQ9FUMeP6yBL
+        old_url: https://drive.google.com/file/d/1oxcwubBDRW1r-KRPJ89blQ9FUMeP6yBL/view
+        new_url: ""
+
+  - dir: 07_management_team
+    page: src/app/[locale]/management-team/page.tsx
+    description: 管理团队文件
+    count: 1
+    files:
+      - seq: 1
+        file_id: 1Pt78jE1fzzweAubx_7Q_WR4zQ21v3lv8
+        old_url: https://drive.google.com/file/d/1Pt78jE1fzzweAubx_7Q_WR4zQ21v3lv8/view
+        new_url: ""
+
+  - dir: 08_depin/videos
+    page: src/app/[locale]/depin/page.tsx
+    description: DePIN视频
+    count: 25
+    files:
+      - seq: 1
+        file_id: 1z4aExNVhK8mMISuO6MPkd-J-ndricRph
+        old_url: https://drive.google.com/file/d/1z4aExNVhK8mMISuO6MPkd-J-ndricRph/view
+        note: 主封面视频
+        new_url: ""
+      - seq: 2
+        file_id: 1hOv1vDDADP3FSAg7IKQ7pHzixqgRWRUm
+        old_url: https://drive.google.com/file/d/1hOv1vDDADP3FSAg7IKQ7pHzixqgRWRUm/view
+        new_url: ""
+      - seq: 3
+        file_id: 1MjtPFbwmWXnjxC_5Yrv6rovezyKn2EDE
+        old_url: https://drive.google.com/file/d/1MjtPFbwmWXnjxC_5Yrv6rovezyKn2EDE/view
+        new_url: ""
+      - seq: 4
+        file_id: 133uuJuHvx5U_3Qha-HOyWEC9Q70IOEf1
+        old_url: https://drive.google.com/file/d/133uuJuHvx5U_3Qha-HOyWEC9Q70IOEf1/view
+        new_url: ""
+      - seq: 5
+        file_id: 1FvvwYmjkT5GIRBkRZrabS2oxjEV_Fbhs
+        old_url: https://drive.google.com/file/d/1FvvwYmjkT5GIRBkRZrabS2oxjEV_Fbhs/view
+        new_url: ""
+      - seq: 6
+        file_id: 1E9rEqBGGUo72AKj3IArHQ3S6maizb0QR
+        old_url: https://drive.google.com/file/d/1E9rEqBGGUo72AKj3IArHQ3S6maizb0QR/view
+        new_url: ""
+      - seq: 7
+        file_id: 1aWTncguE9uHku0IfDERDzNnKoto0J1OO
+        old_url: https://drive.google.com/file/d/1aWTncguE9uHku0IfDERDzNnKoto0J1OO/view
+        new_url: ""
+      - seq: 8
+        file_id: 1tZlEMuQjUwI67KqCHqKnIsULR0zUyKX8
+        old_url: https://drive.google.com/file/d/1tZlEMuQjUwI67KqCHqKnIsULR0zUyKX8/view
+        new_url: ""
+      - seq: 9
+        file_id: 1F7OKhqPSrXR6LbnjhiBWASxuqYQXHR4m
+        old_url: https://drive.google.com/file/d/1F7OKhqPSrXR6LbnjhiBWASxuqYQXHR4m/view
+        new_url: ""
+      - seq: 10
+        file_id: 1mXVKg5OgGjEnus21xO8NRfAM1S0O09AL
+        old_url: https://drive.google.com/file/d/1mXVKg5OgGjEnus21xO8NRfAM1S0O09AL/view
+        new_url: ""
+      - seq: 11
+        file_id: 1aJSDe2yzfrtVbjuuoPUKkqoz9KHb9gCM
+        old_url: https://drive.google.com/file/d/1aJSDe2yzfrtVbjuuoPUKkqoz9KHb9gCM/view
+        new_url: ""
+      - seq: 12
+        file_id: 1SZD4y4ahUmOD2UaucMaxnmi1gpT96FcN
+        old_url: https://drive.google.com/file/d/1SZD4y4ahUmOD2UaucMaxnmi1gpT96FcN/view
+        new_url: ""
+      - seq: 13
+        file_id: 1loDMOMzvEnWMVTHKiPRjEk2oFoQIl3iH
+        old_url: https://drive.google.com/file/d/1loDMOMzvEnWMVTHKiPRjEk2oFoQIl3iH/view
+        new_url: ""
+      - seq: 14
+        file_id: 1wzGNQGRUO4dAixhsUIiHy8jzYiEpvfTB
+        old_url: https://drive.google.com/file/d/1wzGNQGRUO4dAixhsUIiHy8jzYiEpvfTB/view
+        new_url: ""
+      - seq: 15
+        file_id: 14CrE38t6mWDBMj2pGKM3dkxbD97RgCro
+        old_url: https://drive.google.com/file/d/14CrE38t6mWDBMj2pGKM3dkxbD97RgCro/view
+        new_url: ""
+      - seq: 16
+        file_id: 1FZIDUmpOiYjdz9u40qYHqrLOXkWWvpWT
+        old_url: https://drive.google.com/file/d/1FZIDUmpOiYjdz9u40qYHqrLOXkWWvpWT/view
+        new_url: ""
+      - seq: 17
+        file_id: 1l1d3_rqG9_JNtDl2FeOVrVhhHKnVbXJN
+        old_url: https://drive.google.com/file/d/1l1d3_rqG9_JNtDl2FeOVrVhhHKnVbXJN/view
+        new_url: ""
+      - seq: 18
+        file_id: 16hUwnsXRltfovxk7mlfnpbcTXPAozhL4
+        old_url: https://drive.google.com/file/d/16hUwnsXRltfovxk7mlfnpbcTXPAozhL4/view
+        note: "代码中为.view格式(已损坏)，文件ID有效"
+        new_url: ""
+      - seq: 19
+        file_id: 1qPHlZcNXKeMY8I19qmOztAoS-uq7-R8M
+        old_url: https://drive.google.com/file/d/1qPHlZcNXKeMY8I19qmOztAoS-uq7-R8M/view
+        note: "代码中为.view格式(已损坏)，文件ID有效"
+        new_url: ""
+      - seq: 20
+        file_id: 1iTHd3iTkCtO3Z5fOJrnQs-GYRfyofrWR
+        old_url: https://drive.google.com/file/d/1iTHd3iTkCtO3Z5fOJrnQs-GYRfyofrWR/view
+        note: "代码中为.view格式(已损坏)，文件ID有效"
+        new_url: ""
+      - seq: 21
+        file_id: 1-5C_cx24y54xOwkl5HUes7aJqOHUSo78
+        old_url: https://drive.google.com/file/d/1-5C_cx24y54xOwkl5HUes7aJqOHUSo78/view
+        new_url: ""
+      - seq: 22
+        file_id: 16-l5y84wkiN5_fHm4_nvGXXospLfXYhq
+        old_url: https://drive.google.com/file/d/16-l5y84wkiN5_fHm4_nvGXXospLfXYhq/view
+        new_url: ""
+      - seq: 23
+        file_id: 1F6k1tCMzYYkFBNj_wvJ_hoxrj9ccg0RK
+        old_url: https://drive.google.com/file/d/1F6k1tCMzYYkFBNj_wvJ_hoxrj9ccg0RK/view
+        new_url: ""
+      - seq: 24
+        file_id: 1d9jM2nmxF_QIAVI4LN6df-VXJ4_Lrubg
+        old_url: https://drive.google.com/file/d/1d9jM2nmxF_QIAVI4LN6df-VXJ4_Lrubg/view
+        new_url: ""
+      - seq: 25
+        file_id: 1XzCGTj1587YUo3lFN0YRffyLQN_0_QhD
+        old_url: https://drive.google.com/file/d/1XzCGTj1587YUo3lFN0YRffyLQN_0_QhD/view
+        new_url: ""
+
+  - dir: 08_depin/images
+    page: src/app/[locale]/depin/page.tsx
+    description: DePIN图片
+    count: 34
+    files:
+      - seq: 1
+        file_id: 1CXU6V0Rv2FhDvAGdI3aL7XpQl8yyibVC
+        old_url: https://drive.google.com/file/d/1CXU6V0Rv2FhDvAGdI3aL7XpQl8yyibVC/view
+        new_url: ""
+      - seq: 2
+        file_id: 1lzGjA90Lk342Tz0I5X6kqnj4Buaz_AXs
+        old_url: https://drive.google.com/file/d/1lzGjA90Lk342Tz0I5X6kqnj4Buaz_AXs/view
+        new_url: ""
+      - seq: 3
+        file_id: 1L_BlFXHM6K_yBsrVi8IzGiVgEB7phjji
+        old_url: https://drive.google.com/file/d/1L_BlFXHM6K_yBsrVi8IzGiVgEB7phjji/view
+        new_url: ""
+      - seq: 4
+        file_id: 1DcqvwU-CNaJ386IIlcFYpe07gooF93yK
+        old_url: https://drive.google.com/file/d/1DcqvwU-CNaJ386IIlcFYpe07gooF93yK/view
+        new_url: ""
+      - seq: 5
+        file_id: 1OUkUS1IuVR3kWVWyhvWfbK32L9-0KmJl
+        old_url: https://drive.google.com/file/d/1OUkUS1IuVR3kWVWyhvWfbK32L9-0KmJl/view
+        new_url: ""
+      - seq: 6
+        file_id: 1Ju-aOyRCjjkse4rY9EWAxKhtbttWM-d4
+        old_url: https://drive.google.com/file/d/1Ju-aOyRCjjkse4rY9EWAxKhtbttWM-d4/view
+        new_url: ""
+      - seq: 7
+        file_id: 1NpXGCxx3e5mbEEraDX1a_DQUzkMoPDOf
+        old_url: https://drive.google.com/file/d/1NpXGCxx3e5mbEEraDX1a_DQUzkMoPDOf/view
+        new_url: ""
+      - seq: 8
+        file_id: 1cgEef8gYqSI3GogP5ZtXKlP5HKIFU3UX
+        old_url: https://drive.google.com/file/d/1cgEef8gYqSI3GogP5ZtXKlP5HKIFU3UX/view
+        new_url: ""
+      - seq: 9
+        file_id: 1lTHgSklcWsiBQ-TZZ3_fyxjmXggrKTsH
+        old_url: https://drive.google.com/file/d/1lTHgSklcWsiBQ-TZZ3_fyxjmXggrKTsH/view
+        new_url: ""
+      - seq: 10
+        file_id: 1y4TQCk4P-Y6kJlYD4tE7LEcUhcVRaTmJ
+        old_url: https://drive.google.com/file/d/1y4TQCk4P-Y6kJlYD4tE7LEcUhcVRaTmJ/view
+        new_url: ""
+      - seq: 11
+        file_id: 1ra9Jp69GxYNLbKQ61U9QkSJV3s7VZigw
+        old_url: https://drive.google.com/file/d/1ra9Jp69GxYNLbKQ61U9QkSJV3s7VZigw/view
+        new_url: ""
+      - seq: 12
+        file_id: 1k4ZU136c9sSg3BJALOkAvfylMv9jNMHj
+        old_url: https://drive.google.com/file/d/1k4ZU136c9sSg3BJALOkAvfylMv9jNMHj/view
+        new_url: ""
+      - seq: 13
+        file_id: 1QqCAIGzH4EgXK2NloRJTZlCYe0ZORjGs
+        old_url: https://drive.google.com/file/d/1QqCAIGzH4EgXK2NloRJTZlCYe0ZORjGs/view
+        new_url: ""
+      - seq: 14
+        file_id: 1qAg99se5t-ZJXJCiNXtyDumdjCSzz0SY
+        old_url: https://drive.google.com/file/d/1qAg99se5t-ZJXJCiNXtyDumdjCSzz0SY/view
+        new_url: ""
+      - seq: 15
+        file_id: 1njMxHt4EoPRaWs4pFY-iv4IQdUD0o2CS
+        old_url: https://drive.google.com/file/d/1njMxHt4EoPRaWs4pFY-iv4IQdUD0o2CS/view
+        new_url: ""
+      - seq: 16
+        file_id: 1Pv6D10i3ybu3cJPlc8AOvx8kMJT9FqnT
+        old_url: https://drive.google.com/file/d/1Pv6D10i3ybu3cJPlc8AOvx8kMJT9FqnT/view
+        new_url: ""
+      - seq: 17
+        file_id: 1fxq3-ok4tFpW8_vDil5ZPa-iCcfIhh2f
+        old_url: https://drive.google.com/file/d/1fxq3-ok4tFpW8_vDil5ZPa-iCcfIhh2f/view
+        new_url: ""
+      - seq: 18
+        file_id: 1Yx2atQOztPQdsP2sodxdpbctw19AP5_G
+        old_url: https://drive.google.com/file/d/1Yx2atQOztPQdsP2sodxdpbctw19AP5_G/view
+        new_url: ""
+      - seq: 19
+        file_id: 1QypIb1R1NCjBtnOEK2L9QUL-ipLo7lc6
+        old_url: https://drive.google.com/file/d/1QypIb1R1NCjBtnOEK2L9QUL-ipLo7lc6/view
+        new_url: ""
+      - seq: 20
+        file_id: 1g76Ix2znFqf3OUh_H-JojbOwrKx2TewV
+        old_url: https://drive.google.com/file/d/1g76Ix2znFqf3OUh_H-JojbOwrKx2TewV/view
+        note: "代码中为.view格式(已损坏)，文件ID有效"
+        new_url: ""
+      - seq: 21
+        file_id: 10m17W1rsSWeYH86xbs3vw-_skjp5vcLS
+        old_url: https://drive.google.com/file/d/10m17W1rsSWeYH86xbs3vw-_skjp5vcLS/view
+        new_url: ""
+      - seq: 22
+        file_id: 1oqD1nQ9Dy_9oH5ZbVA9-TzQV4MWW68Q4
+        old_url: https://drive.google.com/file/d/1oqD1nQ9Dy_9oH5ZbVA9-TzQV4MWW68Q4/view
+        new_url: ""
+      - seq: 23
+        file_id: 1dOfHWfZ_4VXXWAdggTtcqMeAvVkGzxS3
+        old_url: https://drive.google.com/file/d/1dOfHWfZ_4VXXWAdggTtcqMeAvVkGzxS3/view
+        new_url: ""
+      - seq: 24
+        file_id: 1LmtO_YzOxs3CM4Bq-PvsfJjQJLxZ6Amp
+        old_url: https://drive.google.com/file/d/1LmtO_YzOxs3CM4Bq-PvsfJjQJLxZ6Amp/view
+        new_url: ""
+      - seq: 25
+        file_id: 153hppqt0t3YljSYIE4z_vAngzz2ENcVr
+        old_url: https://drive.google.com/file/d/153hppqt0t3YljSYIE4z_vAngzz2ENcVr/view
+        new_url: ""
+      - seq: 26
+        file_id: 1pxUUdLjEJTQvlpPkdQVxzZh88eTVfEYV
+        old_url: https://drive.google.com/file/d/1pxUUdLjEJTQvlpPkdQVxzZh88eTVfEYV/view
+        new_url: ""
+      - seq: 27
+        file_id: 1G-yfWfLDOMHPCf7zMp93uiVYWk-6DJkK
+        old_url: https://drive.google.com/file/d/1G-yfWfLDOMHPCf7zMp93uiVYWk-6DJkK/view
+        note: "代码中为.view格式(已损坏)，文件ID有效"
+        new_url: ""
+      - seq: 28
+        file_id: 1y6ZITYDsiJrJnNKEX1fB71jt2V_CxEIi
+        old_url: https://drive.google.com/file/d/1y6ZITYDsiJrJnNKEX1fB71jt2V_CxEIi/view
+        note: "代码中为.view格式(已损坏)，文件ID有效"
+        new_url: ""
+      - seq: 29
+        file_id: 1GaU4Lr4xNhwsPTVTTK04LJAp9CFDPzD4
+        old_url: https://drive.google.com/file/d/1GaU4Lr4xNhwsPTVTTK04LJAp9CFDPzD4/view
+        note: "代码中为.view格式(已损坏)，文件ID有效"
+        new_url: ""
+      - seq: 30
+        file_id: 1Wjn29dmclu2_ZYSIPIjucIG4azPMeRAG
+        old_url: https://drive.google.com/file/d/1Wjn29dmclu2_ZYSIPIjucIG4azPMeRAG/view
+        note: "代码中为.view格式(已损坏)，文件ID有效"
+        new_url: ""
+      - seq: 31
+        file_id: 1vIF0KX9N2TwVQYuhYltogPgoEBhxiUlW
+        old_url: https://drive.google.com/file/d/1vIF0KX9N2TwVQYuhYltogPgoEBhxiUlW/view
+        note: "代码中为.view格式(已损坏)，文件ID有效"
+        new_url: ""
+      - seq: 32
+        file_id: 1aeXreFwoW6ikUvm5YJiwgExUj56TV0XG
+        old_url: https://drive.google.com/file/d/1aeXreFwoW6ikUvm5YJiwgExUj56TV0XG/view
+        new_url: ""
+      - seq: 33
+        file_id: 1PiOqr5xbeTCGrH6-H5bZ99Ec7kk-zdeH
+        old_url: https://drive.google.com/file/d/1PiOqr5xbeTCGrH6-H5bZ99Ec7kk-zdeH/view
+        new_url: ""
+      - seq: 34
+        file_id: 1i7RiDM8bJQAclg-Oc51Nz_PEwdhWYD9n
+        old_url: https://drive.google.com/file/d/1i7RiDM8bJQAclg-Oc51Nz_PEwdhWYD9n/view
+        new_url: ""

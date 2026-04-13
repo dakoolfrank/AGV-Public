@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Token Test</title>
+<style>
+  body { font-family: -apple-system, sans-serif; background: #1a1a2e; color: #fff; padding: 20px; text-align: center; }
+  h2 { margin-top: 30px; }
+  button { display: block; width: 90%; max-width: 320px; margin: 12px auto; padding: 16px; font-size: 16px; font-weight: 600; border: none; border-radius: 12px; cursor: pointer; }
+  .btn-green { background: #4ade80; color: #000; }
+  .btn-blue { background: #60a5fa; color: #000; }
+  .btn-orange { background: #fb923c; color: #000; }
+  .btn-purple { background: #a78bfa; color: #000; }
+  .btn-yellow { background: #facc15; color: #000; }
+  #log { text-align: left; background: #111; padding: 15px; border-radius: 8px; margin-top: 20px; font-family: monospace; font-size: 13px; max-height: 400px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }
+  .ok { color: #4ade80; }
+  .err { color: #f87171; }
+  .info { color: #93c5fd; }
+</style>
+</head>
+<body>
+<h2>🦊 wallet_watchAsset Test</h2>
+<p style="color:#aaa">Pure HTML — no React/Next.js</p>
+
+<button class="btn-green" onclick="testConnect()">1. Connect Wallet</button>
+<button class="btn-blue" onclick="testDeepClone()">2. Deep-Clone Request</button>
+<button class="btn-orange" onclick="testSend()">3. ethereum.send()</button>
+<button class="btn-purple" onclick="testSendAsync()">4. sendAsync (callback)</button>
+<button class="btn-yellow" onclick="testDeepLink()">5. Deep Link (new tab)</button>
+<button class="btn-green" onclick="testPostMessage()">6. postMessage (native)</button>
+
+<div id="log"></div>
+
+<script>
+var logEl = document.getElementById('log');
+function log(msg, cls) {
+  var line = document.createElement('div');
+  line.className = cls || '';
+  line.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
+  logEl.appendChild(line);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+var eth = window.ethereum;
+if (!eth) {
+  log('ERROR: window.ethereum not found!', 'err');
+} else {
+  log('window.ethereum detected ✓', 'ok');
+  log('isMetaMask: ' + eth.isMetaMask, 'info');
+  log('chainId: ' + eth.chainId, 'info');
+}
+
+// pGVT token info
+var TOKEN = {
+  address: '0x8F9EC8107C126e94F5C4df26350Fb7354E0C8af9',
+  symbol: 'pGVT',
+  decimals: 18,
+  image: 'https://www.agvnexrur.ai/pGVT_128.png'
+};
+
+async function testConnect() {
+  log('--- Connect ---', 'info');
+  try {
+    var accounts = await eth.request({ method: 'eth_requestAccounts' });
+    log('Connected: ' + accounts[0], 'ok');
+  } catch(e) {
+    log('Connect error: ' + e.message, 'err');
+  }
+}
+
+// Format 1: Standard EIP-747 (same as MetaMask test-dapp)
+async function testStandard() {
+  log('--- Standard (with image) ---', 'info');
+  try {
+    var result = await eth.request({
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20',
+        options: {
+          address: TOKEN.address,
+          symbol: TOKEN.symbol,
+          decimals: TOKEN.decimals,
+          image: TOKEN.image
+        }
+      }
+    });
+    log('Result: ' + JSON.stringify(result), 'ok');
+  } catch(e) {
+    log('Error: ' + e.message, 'err');
+    log('Error code: ' + e.code, 'err');
+  }
+}
+
+// Format 2: No image field at all
+async function testNoImage() {
+  log('--- No Image ---', 'info');
+  try {
+    var result = await eth.request({
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20',
+        options: {
+          address: TOKEN.address,
+          symbol: TOKEN.symbol,
+          decimals: TOKEN.decimals
+        }
+      }
+    });
+    log('Result: ' + JSON.stringify(result), 'ok');
+  } catch(e) {
+    log('Error: ' + e.message, 'err');
+    log('Error code: ' + e.code, 'err');
+  }
+}
+
+// Format 3: decimals as string (like MM test-dapp erc20 section)
+async function testStringDecimals() {
+  log('--- String Decimals ---', 'info');
+  try {
+    var result = await eth.request({
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20',
+        options: {
+          address: TOKEN.address,
+          symbol: TOKEN.symbol,
+          decimals: '18',
+          image: TOKEN.image
+        }
+      }
+    });
+    log('Result: ' + JSON.stringify(result), 'ok');
+  } catch(e) {
+    log('Error: ' + e.message, 'err');
+    log('Error code: ' + e.code, 'err');
+  }
+}
+
+// Format 4: Absolute minimum
+async function testMinimal() {
+  log('--- Minimal ---', 'info');
+  try {
+    var result = await eth.request({
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20',
+        options: {
+          address: TOKEN.address
+        }
+      }
+    });
+    log('Result: ' + JSON.stringify(result), 'ok');
+  } catch(e) {
+    log('Error: ' + e.message, 'err');
+    log('Error code: ' + e.code, 'err');
+  }
+}
+</script>
+</body>
+</html>

@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Token v4</title>
+<style>
+  body { font-family: -apple-system, sans-serif; background: #1a1a2e; color: #fff; padding: 20px; text-align: center; }
+  h2 { margin-top: 20px; }
+  button { display: block; width: 90%; max-width: 320px; margin: 10px auto; padding: 14px; font-size: 15px; font-weight: 600; border: none; border-radius: 12px; cursor: pointer; }
+  .g { background: #4ade80; color: #000; }
+  .b { background: #60a5fa; color: #000; }
+  .o { background: #fb923c; color: #000; }
+  .p { background: #a78bfa; color: #000; }
+  .y { background: #facc15; color: #000; }
+  .pk { background: #f472b6; color: #000; }
+  .r { background: #ef4444; color: #fff; }
+  .w { background: #fff; color: #000; }
+  #log { text-align: left; background: #111; padding: 15px; border-radius: 8px; margin-top: 20px; font-family: monospace; font-size: 12px; max-height: 400px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }
+  .ok { color: #4ade80; } .err { color: #f87171; } .info { color: #93c5fd; }
+</style>
+</head>
+<body>
+<h2>🦊 v4: Array Params</h2>
+<p style="color:#aaa;font-size:13px">metamask_watchAsset said "expected array" — let's give it array!</p>
+
+<button class="g" onclick="testConnect()">1. Connect</button>
+<button class="b" onclick="test2()">2. metamask_watchAsset + [obj]</button>
+<button class="o" onclick="test3()">3. metamask_watchAsset + [{...flat}]</button>
+<button class="p" onclick="test4()">4. wallet_watchAsset + [obj]</button>
+<button class="y" onclick="test5()">5. RNWebView JSON-RPC</button>
+<button class="pk" onclick="test6()">6. webkit handler direct</button>
+<button class="r" onclick="test7()">7. metamask_watchAsset send([obj])</button>
+<button class="w" onclick="test8()">8. wallet_watchAsset send([obj])</button>
+
+<div id="log"></div>
+
+<script>
+var logEl = document.getElementById('log');
+function log(msg, cls) {
+  var d = document.createElement('div');
+  d.className = cls || '';
+  d.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
+  logEl.appendChild(d);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+var eth = window.ethereum;
+if (!eth) log('No ethereum!', 'err');
+else log('ethereum OK, chain=' + eth.chainId, 'ok');
+
+var ADDR = '0x8F9EC8107C126e94F5C4df26350Fb7354E0C8af9';
+var IMG = 'https://www.agvnexrur.ai/pGVT_128.png';
+
+var OBJ = {
+  type: 'ERC20',
+  options: { address: ADDR, symbol: 'pGVT', decimals: 18, image: IMG }
+};
+
+var FLAT = {
+  type: 'ERC20',
+  address: ADDR,
+  symbol: 'pGVT',
+  decimals: 18,
+  image: IMG
+};
+
+async function testConnect() {
+  log('--- Connect ---', 'info');
+  try {
+    var a = await eth.request({ method: 'eth_requestAccounts' });
+    log('Connected: ' + a[0], 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 2: metamask_watchAsset with params as ARRAY containing the object
+async function test2() {
+  log('--- metamask_watchAsset + params:[obj] ---', 'info');
+  try {
+    var r = await eth.request({
+      method: 'metamask_watchAsset',
+      params: [OBJ]
+    });
+    log('Result: ' + JSON.stringify(r), 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 3: metamask_watchAsset with flat object in array (no options wrapper)
+async function test3() {
+  log('--- metamask_watchAsset + params:[flat] ---', 'info');
+  try {
+    var r = await eth.request({
+      method: 'metamask_watchAsset',
+      params: [FLAT]
+    });
+    log('Result: ' + JSON.stringify(r), 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 4: wallet_watchAsset with params as array (non-standard but maybe MM Mobile needs it)
+async function test4() {
+  log('--- wallet_watchAsset + params:[obj] ---', 'info');
+  try {
+    var r = await eth.request({
+      method: 'wallet_watchAsset',
+      params: [OBJ]
+    });
+    log('Result: ' + JSON.stringify(r), 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 5: ReactNativeWebView postMessage with proper JSON-RPC
+async function test5() {
+  log('--- RNWebView JSON-RPC ---', 'info');
+  try {
+    if (!window.ReactNativeWebView) { log('No RNWebView', 'err'); return; }
+
+    // Listen for response
+    window.addEventListener('message', function handler(e) {
+      log('Got message: ' + (typeof e.data === 'string' ? e.data.substring(0, 200) : JSON.stringify(e.data).substring(0, 200)), 'ok');
+      window.removeEventListener('message', handler);
+    });
+
+    var payload = JSON.stringify({
+      id: Date.now(),
+      jsonrpc: '2.0',
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20',
+        options: { address: ADDR, symbol: 'pGVT', decimals: 18, image: IMG }
+      }
+    });
+    log('Sending via RNWebView: ' + payload.substring(0, 100) + '...', 'info');
+    window.ReactNativeWebView.postMessage(payload);
+    log('Sent! Waiting for response...', 'info');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 6: Try webkit messageHandler directly
+async function test6() {
+  log('--- webkit handler ---', 'info');
+  try {
+    if (!window.webkit || !window.webkit.messageHandlers) {
+      log('No webkit handlers', 'err'); return;
+    }
+    // List all handlers
+    var keys = [];
+    for (var k in window.webkit.messageHandlers) { keys.push(k); }
+    log('Available handlers: ' + JSON.stringify(keys), 'info');
+
+    // Try common handler names
+    var names = ['ethereum', 'metamask', 'rpc', 'ReactNativeWebView', 'bridge'];
+    for (var i = 0; i < names.length; i++) {
+      var h = window.webkit.messageHandlers[names[i]];
+      if (h && typeof h.postMessage === 'function') {
+        log('Found handler: ' + names[i] + ' — sending...', 'ok');
+        h.postMessage(JSON.stringify({
+          id: Date.now(),
+          jsonrpc: '2.0',
+          method: 'wallet_watchAsset',
+          params: { type: 'ERC20', options: { address: ADDR, symbol: 'pGVT', decimals: 18, image: IMG } }
+        }));
+        log('Sent via ' + names[i], 'info');
+      }
+    }
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 7: metamask_watchAsset via ethereum.send (legacy) with array
+async function test7() {
+  log('--- metamask_watchAsset send([obj]) ---', 'info');
+  try {
+    var r = await eth.send('metamask_watchAsset', [OBJ]);
+    log('Result: ' + JSON.stringify(r), 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 8: wallet_watchAsset via ethereum.send with array
+async function test8() {
+  log('--- wallet_watchAsset send([obj]) ---', 'info');
+  try {
+    var r = await eth.send('wallet_watchAsset', [OBJ]);
+    log('Result: ' + JSON.stringify(r), 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+</script>
+</body>
+</html>

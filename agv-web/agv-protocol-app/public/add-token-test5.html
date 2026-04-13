@@ -1,0 +1,226 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Token v5</title>
+<style>
+  body { font-family: -apple-system, sans-serif; background: #1a1a2e; color: #fff; padding: 20px; text-align: center; }
+  h2 { margin-top: 20px; }
+  button { display: block; width: 90%; max-width: 320px; margin: 10px auto; padding: 14px; font-size: 15px; font-weight: 600; border: none; border-radius: 12px; cursor: pointer; }
+  .g { background: #4ade80; color: #000; }
+  .b { background: #60a5fa; color: #000; }
+  .o { background: #fb923c; color: #000; }
+  .p { background: #a78bfa; color: #000; }
+  .y { background: #facc15; color: #000; }
+  .pk { background: #f472b6; color: #000; }
+  #log { text-align: left; background: #111; padding: 15px; border-radius: 8px; margin-top: 20px; font-family: monospace; font-size: 12px; max-height: 400px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }
+  .ok { color: #4ade80; } .err { color: #f87171; } .info { color: #93c5fd; }
+</style>
+</head>
+<body>
+<h2>🦊 v5: Internal Bridge</h2>
+<p style="color:#aaa;font-size:13px">Bypass ethereum.request() — talk to MM directly</p>
+
+<button class="g" onclick="testConnect()">1. Connect</button>
+<button class="b" onclick="test2()">2. postMessage → metamask-contentscript</button>
+<button class="o" onclick="test3()">3. postMessage → metamask-inpage</button>
+<button class="p" onclick="test4()">4. _rpcRequest internal</button>
+<button class="y" onclick="test5()">5. Patched request (structuredClone)</button>
+<button class="pk" onclick="test6()">6. RNWebView with MM-RPC format</button>
+
+<div id="log"></div>
+
+<script>
+var logEl = document.getElementById('log');
+function log(msg, cls) {
+  var d = document.createElement('div');
+  d.className = cls || '';
+  d.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
+  logEl.appendChild(d);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+var eth = window.ethereum;
+if (!eth) log('No ethereum!', 'err');
+else log('ethereum OK, chain=' + eth.chainId, 'ok');
+
+var ADDR = '0x8F9EC8107C126e94F5C4df26350Fb7354E0C8af9';
+var IMG = 'https://www.agvnexrur.ai/pGVT_128.png';
+
+// Listen for ALL messages to catch MM responses
+window.addEventListener('message', function(e) {
+  if (e.data && typeof e.data === 'object') {
+    var t = e.data.target || '';
+    if (t.indexOf('metamask') !== -1 || t.indexOf('wallet') !== -1) {
+      log('📩 MSG [' + t + ']: ' + JSON.stringify(e.data).substring(0, 300), 'ok');
+    }
+  }
+});
+
+async function testConnect() {
+  log('--- Connect ---', 'info');
+  try {
+    var a = await eth.request({ method: 'eth_requestAccounts' });
+    log('Connected: ' + a[0], 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 2: Post directly to metamask-contentscript (the internal format we captured)
+function test2() {
+  log('--- postMessage → metamask-contentscript ---', 'info');
+  var id = Date.now();
+  var msg = {
+    target: 'metamask-contentscript',
+    data: {
+      name: 'metamask-provider',
+      data: {
+        jsonrpc: '2.0',
+        id: id,
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: {
+            address: ADDR,
+            symbol: 'pGVT',
+            decimals: 18,
+            image: IMG
+          }
+        }
+      }
+    }
+  };
+  log('Sending id=' + id + ': ' + JSON.stringify(msg).substring(0, 200) + '...', 'info');
+  window.postMessage(msg, '*');
+  log('Sent! Watch for 📩 response above', 'info');
+}
+
+// 3: Post to metamask-inpage (reverse direction, might trigger differently)
+function test3() {
+  log('--- postMessage → metamask-inpage ---', 'info');
+  var id = Date.now();
+  window.postMessage({
+    target: 'metamask-inpage',
+    data: {
+      name: 'metamask-provider',
+      data: {
+        jsonrpc: '2.0',
+        id: id,
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: {
+            address: ADDR,
+            symbol: 'pGVT',
+            decimals: 18,
+            image: IMG
+          }
+        }
+      }
+    }
+  }, '*');
+  log('Sent id=' + id, 'info');
+}
+
+// 4: Try internal _rpcRequest if it exists
+async function test4() {
+  log('--- _rpcRequest ---', 'info');
+
+  // Check for internal methods
+  var internals = ['_rpcRequest', '_sendAsync', '_jsonRpcConnection', '_rpcEngine'];
+  for (var i = 0; i < internals.length; i++) {
+    log(internals[i] + ': ' + typeof eth[internals[i]], 'info');
+  }
+
+  if (typeof eth._rpcRequest === 'function') {
+    try {
+      eth._rpcRequest({
+        jsonrpc: '2.0',
+        id: Date.now(),
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: { address: ADDR, symbol: 'pGVT', decimals: 18, image: IMG }
+        }
+      }, function(err, res) {
+        if (err) log('_rpcRequest err: ' + (err.message || JSON.stringify(err)), 'err');
+        else log('_rpcRequest result: ' + JSON.stringify(res), 'ok');
+      });
+      log('_rpcRequest called', 'info');
+    } catch(e) { log('Err: ' + e.message, 'err'); }
+  } else {
+    log('_rpcRequest not available', 'err');
+  }
+}
+
+// 5: Monkey-patch: wrap request to use structuredClone on params
+async function test5() {
+  log('--- Patched request (structuredClone) ---', 'info');
+  try {
+    // Create a plain object using Object.create(null) — no prototype
+    var opts = Object.create(null);
+    opts.address = ADDR;
+    opts.symbol = 'pGVT';
+    opts.decimals = 18;
+    opts.image = IMG;
+
+    var p = Object.create(null);
+    p.type = 'ERC20';
+    p.options = opts;
+
+    log('params proto: ' + Object.getPrototypeOf(p), 'info');
+    log('opts proto: ' + Object.getPrototypeOf(opts), 'info');
+
+    var r = await eth.request({
+      method: 'wallet_watchAsset',
+      params: p
+    });
+    log('Result: ' + JSON.stringify(r), 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 6: ReactNativeWebView with MM internal JSON-RPC format
+function test6() {
+  log('--- RNWebView MM-RPC format ---', 'info');
+  if (!window.ReactNativeWebView) { log('No RNWebView', 'err'); return; }
+  try {
+    // Format 1: The exact internal format
+    var payload1 = JSON.stringify({
+      target: 'metamask-contentscript',
+      data: {
+        name: 'metamask-provider',
+        data: {
+          jsonrpc: '2.0',
+          id: Date.now(),
+          method: 'wallet_watchAsset',
+          params: {
+            type: 'ERC20',
+            options: { address: ADDR, symbol: 'pGVT', decimals: 18, image: IMG }
+          }
+        }
+      }
+    });
+    log('Sending format 1...', 'info');
+    window.ReactNativeWebView.postMessage(payload1);
+
+    // Format 2: Direct JSON-RPC
+    setTimeout(function() {
+      var payload2 = JSON.stringify({
+        jsonrpc: '2.0',
+        id: Date.now(),
+        method: 'wallet_watchAsset',
+        params: {
+          type: 'ERC20',
+          options: { address: ADDR, symbol: 'pGVT', decimals: 18, image: IMG }
+        }
+      });
+      log('Sending format 2 (direct JSON-RPC)...', 'info');
+      window.ReactNativeWebView.postMessage(payload2);
+    }, 1000);
+
+    log('Both sent via RNWebView', 'info');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+</script>
+</body>
+</html>

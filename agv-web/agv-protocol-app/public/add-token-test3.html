@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Add Token Test v3</title>
+<style>
+  body { font-family: -apple-system, sans-serif; background: #1a1a2e; color: #fff; padding: 20px; text-align: center; }
+  h2 { margin-top: 20px; }
+  button { display: block; width: 90%; max-width: 320px; margin: 10px auto; padding: 14px; font-size: 15px; font-weight: 600; border: none; border-radius: 12px; cursor: pointer; }
+  .g { background: #4ade80; color: #000; }
+  .b { background: #60a5fa; color: #000; }
+  .o { background: #fb923c; color: #000; }
+  .p { background: #a78bfa; color: #000; }
+  .y { background: #facc15; color: #000; }
+  .pk { background: #f472b6; color: #000; }
+  .r { background: #ef4444; color: #fff; }
+  #log { text-align: left; background: #111; padding: 15px; border-radius: 8px; margin-top: 20px; font-family: monospace; font-size: 12px; max-height: 400px; overflow-y: auto; white-space: pre-wrap; word-break: break-all; }
+  .ok { color: #4ade80; } .err { color: #f87171; } .info { color: #93c5fd; }
+</style>
+</head>
+<body>
+<h2>🦊 v3: String Params</h2>
+<p style="color:#aaa;font-size:13px">Testing if MM Mobile wants string instead of object</p>
+
+<button class="g" onclick="testConnect()">1. Connect</button>
+<button class="b" onclick="testStringParams()">2. params = JSON string</button>
+<button class="o" onclick="testArrayString()">3. params = [JSON string]</button>
+<button class="p" onclick="testFlat()">4. Flat (no options wrapper)</button>
+<button class="y" onclick="testMetamaskMethod()">5. metamask_watchAsset method</button>
+<button class="pk" onclick="testRawRPC()">6. Raw JSON-RPC via fetch</button>
+<button class="r" onclick="testSwitchThenWatch()">7. Switch to ETH then watch</button>
+
+<div id="log"></div>
+
+<script>
+var logEl = document.getElementById('log');
+function log(msg, cls) {
+  var d = document.createElement('div');
+  d.className = cls || '';
+  d.textContent = '[' + new Date().toLocaleTimeString() + '] ' + msg;
+  logEl.appendChild(d);
+  logEl.scrollTop = logEl.scrollHeight;
+}
+
+var eth = window.ethereum;
+if (!eth) log('No ethereum!', 'err');
+else log('ethereum OK, chain=' + eth.chainId, 'ok');
+
+var ADDR = '0x8F9EC8107C126e94F5C4df26350Fb7354E0C8af9';
+var IMG = 'https://www.agvnexrur.ai/pGVT_128.png';
+var OBJ = { type: 'ERC20', options: { address: ADDR, symbol: 'pGVT', decimals: 18, image: IMG } };
+
+async function testConnect() {
+  log('--- Connect ---', 'info');
+  try {
+    var a = await eth.request({ method: 'eth_requestAccounts' });
+    log('Connected: ' + a[0], 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 2: Pass params as a JSON STRING instead of an object
+async function testStringParams() {
+  log('--- params = JSON.stringify ---', 'info');
+  try {
+    var r = await eth.request({
+      method: 'wallet_watchAsset',
+      params: JSON.stringify(OBJ)
+    });
+    log('Result: ' + JSON.stringify(r), 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 3: Pass params as array containing a JSON string
+async function testArrayString() {
+  log('--- params = [JSON string] ---', 'info');
+  try {
+    var r = await eth.request({
+      method: 'wallet_watchAsset',
+      params: [JSON.stringify(OBJ)]
+    });
+    log('Result: ' + JSON.stringify(r), 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 4: Flatten — put address/symbol/decimals directly in params (no options wrapper)
+async function testFlat() {
+  log('--- Flat params ---', 'info');
+  try {
+    var r = await eth.request({
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20',
+        address: ADDR,
+        symbol: 'pGVT',
+        decimals: 18,
+        image: IMG
+      }
+    });
+    log('Result: ' + JSON.stringify(r), 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 5: Use metamask_watchAsset (legacy method name)
+async function testMetamaskMethod() {
+  log('--- metamask_watchAsset ---', 'info');
+  try {
+    var r = await eth.request({
+      method: 'metamask_watchAsset',
+      params: OBJ
+    });
+    log('Result: ' + JSON.stringify(r), 'ok');
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 6: Raw JSON-RPC POST (bypass provider entirely)
+async function testRawRPC() {
+  log('--- Raw JSON-RPC fetch ---', 'info');
+  try {
+    // Get the RPC endpoint from provider
+    var rpcUrl = eth.rpcUrl || eth._rpcUrl || null;
+    log('rpcUrl from provider: ' + rpcUrl, 'info');
+
+    // Try sending directly to the internal RPC
+    // MM Mobile WebView exposes a message channel
+    if (window.ReactNativeWebView) {
+      log('ReactNativeWebView found! Trying postMessage...', 'ok');
+      window.ReactNativeWebView.postMessage(JSON.stringify({
+        id: Date.now(),
+        jsonrpc: '2.0',
+        method: 'wallet_watchAsset',
+        params: OBJ
+      }));
+      log('postMessage sent', 'info');
+    } else {
+      log('No ReactNativeWebView', 'info');
+    }
+
+    // Also try window.__mmBridge
+    if (window.__mmBridge) {
+      log('__mmBridge found!', 'ok');
+    } else {
+      log('No __mmBridge', 'info');
+    }
+
+    // Check for WKWebView message handlers (iOS)
+    if (window.webkit && window.webkit.messageHandlers) {
+      log('webkit.messageHandlers found!', 'ok');
+      var handlers = Object.keys(window.webkit.messageHandlers);
+      log('Handlers: ' + handlers.join(', '), 'info');
+    } else {
+      log('No webkit.messageHandlers', 'info');
+    }
+  } catch(e) { log('Err: ' + e.message, 'err'); }
+}
+
+// 7: Switch to Ethereum mainnet first, then try watchAsset
+async function testSwitchThenWatch() {
+  log('--- Switch chain + watch ---', 'info');
+  try {
+    // Don't actually switch, just test on current chain
+    // But first, try with a well-known token (USDT on BSC)
+    log('Trying USDT (well-known token)...', 'info');
+    var r = await eth.request({
+      method: 'wallet_watchAsset',
+      params: {
+        type: 'ERC20',
+        options: {
+          address: '0x55d398326f99059fF775485246999027B3197955',
+          symbol: 'USDT',
+          decimals: 18,
+          image: 'https://cryptologos.cc/logos/tether-usdt-logo.png'
+        }
+      }
+    });
+    log('USDT Result: ' + JSON.stringify(r), 'ok');
+  } catch(e) { log('USDT Err: ' + e.message, 'err'); }
+}
+</script>
+</body>
+</html>
